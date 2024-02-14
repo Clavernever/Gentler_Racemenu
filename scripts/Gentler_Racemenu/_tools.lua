@@ -105,7 +105,7 @@ end
 -- types.Player.setBirthSign(world.players[1], 'fay')
 -- -- END
 
--- -- If the characther has no birthsign for whatever reason (most likely the testing launcher option) then add a token sign so the mod doesn't explode.
+-- -- If the characther has no birthsign for whatever reason (most likely the testing launcher option) then add a token sign so the mod doesn't explode. Currently not working :D
 -- do
 --     local sign = types.Player.getBirthSign(self)
 --     if (sign == '') or (not sign) then types.Player.setBirthSign(self, types.Player.birthSigns.records[1].id) end
