@@ -245,6 +245,8 @@ Func.set_openmw_stats = function()
     -- COMPAT for 'reincarnate' || Slap Reincarnate's startup script awake so it makes racial toggle spells work.
     if Compat.enabled['reincarnate'] and (race == 'argonian' or race == 'khajiit') then
         core.sendGlobalEvent('grm_setGlobals', {'grm_compat_reincarnate_start_RacialStartup', 1})
+    elseif Compat.enabled['sensiblebirthsigns'] then
+        core.sendGlobalEvent('grm_setGlobals', {'grm_compat_sensibleBirthsigns_start_KI_birthsign_start', 1})
     end
 end
 

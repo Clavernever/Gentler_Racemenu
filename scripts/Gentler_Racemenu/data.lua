@@ -323,5 +323,14 @@ Compat.modules:new{ name ='kart_special_boy',
     end
 }
 
+-- 
+Compat.modules:new{ name ='sensiblebirthsigns',
+    content_files = {'SensibleBirthsigns.esp'},
+    apply = function()
+        if Data.birthsigns['Moonshadow Sign'] then
+            table.insert(Data.birthsigns['Moonshadow Sign'], '_shadowKin')
+        end
+    end
+}
 -- RETURN || NEED THIS SO FILE DO THING
 return {Data = Data, Compat = Compat}
