@@ -1,2 +1,3 @@
 PLAYER: scripts/gentler_racemenu/core.lua
 GLOBAL: scripts/gentler_racemenu/setGlobals.lua
+MENU: scripts/gentler_racemenu/menu.lua

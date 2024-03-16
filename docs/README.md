@@ -10,7 +10,9 @@ What this mod does:
   - Recovers all your stats (skills, level and abilities) after using StatReviewMenu or any of it's sub-menus (Name, Race, Class and Birthsign)
   - Recovers all your spells after changing your Name, Race, Class or Birthsign, including any diseases, curses or abilities you had.
   - Accounts for racial stats, abilities and skill bonuses, correctly replacing them with the new race's values.
+    > This can be disabled or made to respect stat caps via the mod's settings.
   - Sets the correct PCRace value so you'll get the proper dialogue after changing races.
+  - Allows migration between any two compatible race/birthsign mods (and with vanilla).
 
 ---
 
@@ -19,16 +21,15 @@ What this mod does:
 
 #### Compatible with any combination among the following:
   - Vanilla Morrowind's Races/Birthsigns
-  - Reincarnate - Birthsigns of Morrowind v1.09﻿
-  - Birthsign mods that don't rely on scripts:
+  - Reincarnate - Birthsigns of Morrowind v1.09
+  - Sensible Races and Birthsigns
+  - Any Race and Birthsign mods that don't rely on scripts:
       Moonlight - Birthsigns of Morrowind  
       Expanded Birthsigns for Purists  
       Written in the Stars  
       Birthsigns Are More Fun (BAMF)  
      >.. and literally anything so long as it only uses powers/abilities/spells to achieve it's effects.  
         It's even compatible with your own custom birthsigns, so long as you keep to that rule.
-  - Sensible Birthsigns from SRB requires a small patch, and Sensible Races a big one.
-    > Neither is supported (yet).
 
 ---
 #### How to use it:
@@ -71,20 +72,17 @@ What this mod does:
 
   - [ ] Support any combination of race/birthsign mods
   - [x] Birthsigns are recognised automatically from your load order
-  - [ ] Races are recognised automatically from your load order.
-    > I'm waiting for the necessary API changes to be able to do it.  
-  - [x] Non-omwaddon compatibility modules are recognised and enabled automatically based on your load order, so long as you didn't change their addon file names.
-    > Some mods may still require compatibility patches or addons even after races are automated, especially if they use custom scripts.
+  - [x] Races are recognised automatically from your load order.
+  - [x] Compatibility modules are recognised and enabled automatically based on your load order, so long as you didn't change their addon file names.
   - [ ] Opening Racemenu from a custom UI window.
   - [ ] Storing a history, accessible via said UI, of all races and classes your character went through.
 
-  - [ ] Allow you to switch between any of the supported race/birthign mods mid-run, via the following steps:
-    1. Initiate migration by clicking a button in GRO's UI  
-       This will automatically save and then quit your game.
+  - [x] Allow you to switch between any of the supported race/birthign mods mid-run, via the following steps:
+    1. Initiate migration by clicking a button in GRO's Settings Menu  
+       This will automatically save and then quit your game a second after you resume the game.
     2. Swap your birthign/race/both mod(s), launch the game and load your save (ignoring the missing content warnings).
     3. Pick your desired race from the new mod via the (automatically opened) vanilla racemenu.
-    4. Save and quit your game.
-    5. Load your save again and play away.
+    4. Save your game.
 
 #### What it will not do, probably ever:
 
