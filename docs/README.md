@@ -11,6 +11,7 @@ What this mod does:
   - Recovers all your spells after changing your Name, Race, Class or Birthsign, including any diseases, curses or abilities you had.
   - Accounts for racial stats, abilities and skill bonuses, correctly replacing them with the new race's values.
     > This can be disabled or made to respect stat caps via the mod's settings.
+  - Restores your Faction Rank and Reputation.
   - Sets the correct PCRace value so you'll get the proper dialogue after changing races.
   - Allows migration between any two compatible race/birthsign mods (and with vanilla).
 
