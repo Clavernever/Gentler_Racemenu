@@ -100,13 +100,13 @@ Fn.enable_compat_modules = function()
 end
 
 Fn.applyMWBolt = function(mwbolt)
-	local equipment = types.Actor.getEquipment(self)
-	local pcammo = types.Actor.getEquipment(self, types.Actor.EQUIPMENT_SLOT.Ammunition)
+  local equipment = types.Actor.getEquipment(self)
+  local pcammo = types.Actor.getEquipment(self, types.Actor.EQUIPMENT_SLOT.Ammunition)
   equipment[types.Actor.EQUIPMENT_SLOT.Ammunition] = mwbolt
-	types.Actor.setEquipment(self, equipment)
+  types.Actor.setEquipment(self, equipment)
   equipment[types.Actor.EQUIPMENT_SLOT.Ammunition] = pcammo
-	types.Actor.setEquipment(self, equipment)
-	DEBUG('MWBolt applied.')
+  types.Actor.setEquipment(self, equipment)
+  DEBUG('MWBolt applied.')
   core.sendGlobalEvent('grm_removeItem', {source = self, item = mwbolt, count = 1})
 end
 
@@ -261,14 +261,20 @@ Fn.set_data_stats = function(mode)
 
 	end
 
+	local str_factor = types.NPC.stats.attributes.strength(self).base * 0.5
+	local end_factor = types.NPC.stats.attributes.endurance(self).base * 0.5
+	Dt.pc_dynamic.health = types.Actor.stats.dynamic.health(self).base - end_factor - str_factor - Fn.get_abilitymodifiers('fortifyhealth')
+	DEBUG('Storing HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health))..' | Removed '..tostring(str_factor)..' from STR and '..tostring(end_factor)..' from END')
   if Mui.getSetting('Force_Dynamic_Stats') then
 	  DEBUG('Saving Dynamic Stats...')
     local xint = types.Actor.stats.attributes.intelligence(self).modified * Fn.get_abilitymodifiers('fortifymaximummagicka')
 		Dt.pc_dynamic.magicka = - xint
-		for _, stat in ipairs{'fatigue', 'health', 'magicka'} do
+		for _, stat in ipairs{'health', 'magicka', 'fatigue'} do
 			Dt.pc_dynamic[stat] = types.Actor.stats.dynamic[stat](self).base - Fn.get_abilitymodifiers('fortify'..stat)
 		end
-	  DEBUG('HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health))..' | MP: '..string.format("%.1f", tostring(Dt.pc_dynamic.magicka))..' | FP: '..string.format("%.1f", tostring(Dt.pc_dynamic.fatigue)))
+	  DEBUG('Storing HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health)))
+	  DEBUG('Storing MP: '..string.format("%.1f", tostring(Dt.pc_dynamic.magicka)))
+		DEBUG('Storing FP: '..string.format("%.1f", tostring(Dt.pc_dynamic.fatigue)))
 	end
 
   Dt.pc_spells = {}
@@ -386,12 +392,20 @@ Fn.set_openmw_stats = function()
     types.Player.stats.skills[_name](self).base = get_val(newskills[_name])
   end
 
+	local str_factor = types.NPC.stats.attributes.strength(self).base * 0.5
+	local end_factor = types.NPC.stats.attributes.endurance(self).base * 0.5
+	types.Player.stats.dynamic.health(self).base = Dt.pc_dynamic.health + end_factor + str_factor + Fn.get_abilitymodifiers('fortifyhealth')
+  types.Player.stats.dynamic.health(self).current = types.Player.stats.dynamic.health(self).base
+	DEBUG('Setting HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health))..' | Restored '..tostring(str_factor)..' from STR and '..tostring(end_factor)..' from END')
   if Mui.getSetting('Force_Dynamic_Stats') then
 	  DEBUG('Restoring Dynamic Stats...')
-		for _, stat in ipairs{'fatigue', 'health', 'magicka'} do
+		for _, stat in ipairs{'health', 'magicka', 'fatigue'} do
       types.Player.stats.dynamic[stat](self).base = get_val(Dt.pc_dynamic[stat])
+      types.Player.stats.dynamic[stat](self).current = get_val(Dt.pc_dynamic[stat])
 		end
-	  DEBUG('HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health))..' | MP: '..string.format("%.1f", tostring(Dt.pc_dynamic.magicka))..' | FP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health)))
+	  DEBUG('Setting HP: '..string.format("%.1f", tostring(Dt.pc_dynamic.health)))
+	  DEBUG('Setting MP: '..string.format("%.1f", tostring(Dt.pc_dynamic.magicka)))
+		DEBUG('Setting FP: '..string.format("%.1f", tostring(Dt.pc_dynamic.fatigue)))
 	end
 
 
