@@ -140,7 +140,13 @@ Fn.get_races = function()
   		attributes_female = attr_female,
   	}
 		do local spells = {}
-			for _, id in ipairs(race.spells) do table.insert(spells, core.magic.spells[id].name) end
+			for _, id in ipairs(race.spells) do 
+				if not race.spells then 
+					print(race.id..' has no spells') 
+				else 
+					table.insert(spells, core.magic.spells.records[id].name) 
+				end 
+			end
 			DEBUG('Race Loaded: '..race.name..FILL(8, race.name)..' | Spells: ['..table.concat(spells, ', ')..']')
 		end
   end
@@ -177,8 +183,8 @@ Fn.get_abilitymodifiers = function(kind, stat)
       getmodifier = function(_effect) if _effect.affectedAttribute == stat then fortify = fortify + _effect.magnitudeThisFrame end end
     end
     for _id, _params in pairs(types.Actor.activeSpells(self)) do
-      if core.magic.spells[_params.id] then -- we only wanna check SPELL types, since abilities never come from enchantments
-        local spell_type = get_val(core.magic.spells[_params.id].type)
+      if core.magic.spells.records[_params.id] then -- we only wanna check SPELL types, since abilities never come from enchantments
+        local spell_type = get_val(core.magic.spells.records[_params.id].type)
         if equal(spell_type, API_Spelltype_Ability) then -- if it's not an ability, then we don't care about it
           for _, _effect in pairs(_params.effects) do
             getmodifier(_effect) -- Check if the effect affects [kind.stat] and if it does then add it's magnitude to fortify
@@ -287,7 +293,7 @@ Fn.set_data_stats = function(mode)
       Dt.pc_spells[_id] = nil
     end
   	do local spells = {}
-  	  for _, id in ipairs(Dt.birthsigns[birthsign.id]) do table.insert(spells, core.magic.spells[id].name) end
+  	  for _, id in ipairs(Dt.birthsigns[birthsign.id]) do table.insert(spells, core.magic.spells.records[id].name) end
     	DEBUG('Removing Birthsign Spells: '..birthsign.name..' | Spells: ['..table.concat(spells, ', ')..']')
     end
 	end
@@ -295,14 +301,14 @@ Fn.set_data_stats = function(mode)
     Dt.pc_spells[_id] = nil
   end
 	do local spells = {}
-	  for _, id in ipairs(Dt.races[race].spells) do table.insert(spells, core.magic.spells[id].name) end
+	  for _, id in ipairs(Dt.races[race].spells) do table.insert(spells, core.magic.spells.records[id].name) end
   	DEBUG('Removing Racial Spells: '..types.NPC.races.record(race).name..' | Spells: ['..table.concat(spells, ', ')..']')
   end
   for _, _id in ipairs(Compat.spells) do
     Dt.pc_spells[_id] = nil
   end
 	do local spells = {}
-	  for _, id in ipairs(Compat.spells) do table.insert(spells, core.magic.spells[id].name) end
+	  for _, id in ipairs(Compat.spells) do table.insert(spells, core.magic.spells.records[id].name) end
   	DEBUG('Removing Scripted Race/Birthsign Spells: ['..table.concat(spells, ', ')..']')
   end
 	if Mui.getSetting('Purge_Spells') then
@@ -312,7 +318,7 @@ Fn.set_data_stats = function(mode)
 		DEBUG('Purging all known race and birthsign spells from player list...')
 	end
 	do local spells = {}
-	  for _, id in pairs(Dt.pc_spells) do table.insert(spells, core.magic.spells[id].name) end
+	  for _, id in pairs(Dt.pc_spells) do table.insert(spells, core.magic.spells.records[id].name) end
   	DEBUG('Saved Player Spells: ['..table.concat(spells, ', ')..']')
   end
 
@@ -410,7 +416,7 @@ Fn.set_openmw_stats = function()
 
 
 	do local spells = {}
-	  for _, id in pairs(Dt.pc_spells) do table.insert(spells, core.magic.spells[id].name) end
+	  for _, id in pairs(Dt.pc_spells) do table.insert(spells, core.magic.spells.records[id].name) end
   	DEBUG('Saved Player Spells: ['..table.concat(spells, ', ')..']')
   end
 
@@ -418,7 +424,7 @@ Fn.set_openmw_stats = function()
     Dt.pc_spells[_id] = _id
   end
 	do local spells = {}
-	  for _, id in ipairs(types.NPC.races.record(race).spells) do table.insert(spells, core.magic.spells[id].name) end
+	  for _, id in ipairs(types.NPC.races.record(race).spells) do table.insert(spells, core.magic.spells.records[id].name) end
   	DEBUG('New Race: '..types.NPC.races.record(race).name..' | Spells: ['..table.concat(spells, ', ')..']')
   end
   local birthsign = types.Player.birthSigns.record(types.Player.getBirthSign(self))
@@ -427,7 +433,7 @@ Fn.set_openmw_stats = function()
       Dt.pc_spells[_id] = _id
     end
     do local spells = {}
-      for _, id in ipairs(Dt.birthsigns[birthsign.id]) do table.insert(spells, core.magic.spells[id].name) end
+      for _, id in ipairs(Dt.birthsigns[birthsign.id]) do table.insert(spells, core.magic.spells.records[id].name) end
     	DEBUG('New Birthsign: '..birthsign.name..' | Spells: ['..table.concat(spells, ', ')..']')
     end
   end
